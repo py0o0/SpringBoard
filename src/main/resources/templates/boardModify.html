@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/modify/{boardId}(boardId=${boardId})}" method="post">
+    <input type="text" placeholder="제목" name="boardTitle" id="boardTitle">
+    <textarea type="text" placeholder="내용" name="boardContents" id="boardContents"></textarea>
+    <input type="submit" value="글 수정">
+</form>
+</body>
+</html>

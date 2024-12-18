@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.SpringDiary.SpringDiary.Repository.BoardRepository">
+<insert id="write" parameterType="board" >
+    insert into board_table(boardTitle, boardContents, userId)
+    values (#{boardTitle},#{boardContents},#{userId})
+</insert>
+
+    <select id="getMainBoard">
+        select boardId, boardTitle,userId, substr(boardContents,30) as boardContenst, boardPass, boardLike,
+               Date_format(boardCreated,"%Y-%m-%d") as boardCreated
+        from board_table
+        order by 1 desc limit 10
+    </select>
+
+    <select id="findById">
+        select * from board_table where boardId=#{boardId}
+    </select>
+
+    <update id="updatePass">
+        update board_table set boardPass = boardPass + 1 where boardId=#{boardId}
+    </update>
+
+    <select id="like">
+        select count(*) from like_table where boardId=#{boardId} and userId=#{userId}
+    </select>
+
+    <update id="updateLike">
+        update board_table set boardLike = boardLike + 1 where boardId=#{boardId}
+    </update>
+
+    <insert id="insertLike">
+        insert into like_table(userId, boardId)
+        values (#{userId}, #{boardId})
+    </insert>
+
+    <insert id="insertComment" parameterType="comment">
+        insert into comment_table(userId,boardId,commentContents)
+        values (#{userId},#{boardId},#{commentContents})
+    </insert>
+
+    <select  id="getComment" parameterType="Integer" resultType="comment">
+        select * from comment_table where boardId=#{boardId} order by commentId
+    </select>
+
+    <update id="updateBoard" parameterType="board">
+        update board_table set boardTitle=#{boardTitle}, boardContents=#{boardContents} where boardId=#{boardId}
+    </update>
+
+    <delete id="removeLike" parameterType="Long">
+        delete from like_table where boardId=#{boardId};
+    </delete>
+
+    <delete id="removeComment" parameterType="Long">
+        delete from comment_table where boardId=#{boardId};
+    </delete>
+
+    <delete id="removeBoard" parameterType="Long">
+        delete from board_table where boardId=#{boardId};
+    </delete>
+
+    <select id="likeByGetBoard" parameterType="String" resultType="board">
+        select * from board_table
+        where boardId in (select boardId from like_table where userId=#{id})
+    </select>
+
+    <select id="commentByGetBoard" parameterType="String" resultType="board">
+        select * from board_table
+        where boardId in(select boardId from comment_table where userId=#{id})
+    </select>
+
+    <select id="boardIdByGetBoard" parameterType="String" resultType="board">
+        select * from board_table where userId=#{id}
+    </select>
+
+    <select id="searchBoard" parameterType="String" resultType="board">
+        select * from board_table
+        where boardTitle like concat('%', #{input},'%') or boardContents like concat('%', #{input},'%')
+    </select>
+</mapper>

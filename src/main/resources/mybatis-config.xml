@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.Member" alias="member"></typeAlias>
+        <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.Board" alias="board"></typeAlias>
+        <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.Comment" alias="comment"></typeAlias>
+    </typeAliases>
+</configuration>

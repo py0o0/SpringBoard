@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/loginProc" method="post">
+    <input placeholder="ID를 입력하세요" id="username" name="username"><br>
+    <input placeholder="비밀번호를 입력하세요" id="password" name="password"><br/>
+    <input type="submit" value="로그인">
+</form>
+</body>
+<script>
+    window.onload = function(){
+        const url = new URLSearchParams(window.location.search)
+        const err = url.get('error')
+        console.log(err)
+        if(err) alert("로그인 실패");
+    }
+</script>
+</html>
