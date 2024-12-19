@@ -4,6 +4,9 @@ import com.example.SpringDiary.SpringDiary.Domain.Board;
 import com.example.SpringDiary.SpringDiary.Domain.Comment;
 import com.example.SpringDiary.SpringDiary.Repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +27,7 @@ public class BoardService {
         boardRepository.write(board);
     }
 
-    public List<Board> getMainBoard() {
-        return boardRepository.getMainBoard();
-    }
+
 
     public Board findById(int boardId) {
         boardRepository.updatePass(boardId);
@@ -81,5 +82,18 @@ public class BoardService {
 
     public List<Board> searchBoard(String input) {
         return boardRepository.searchBoard(input);
+    }
+
+    public Page<Board> getMainBoard(Pageable pageable) {
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+        int pageSize = pageable.getPageSize();
+        Map<String, Object> input = new HashMap<>();
+        input.put("page",offset);
+        input.put("size",pageSize);
+        List<Board> boards = boardRepository.getMainBoard(input);
+        int size = boardRepository.getBoardSize();
+
+        // Page 객체로 변환하여 반환
+        return new PageImpl<>(boards, pageable, size);
     }
 }

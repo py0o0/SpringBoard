@@ -8,11 +8,12 @@
     values (#{boardTitle},#{boardContents},#{userId})
 </insert>
 
-    <select id="getMainBoard">
+    <select id="getMainBoard" resultType="board">
         select boardId, boardTitle,userId, substr(boardContents,30) as boardContenst, boardPass, boardLike,
                Date_format(boardCreated,"%Y-%m-%d") as boardCreated
         from board_table
-        order by 1 desc limit 10
+        order by 1 desc
+        lIMIT #{page}, #{size}
     </select>
 
     <select id="findById">
@@ -91,4 +92,8 @@
     <delete id="removeBoardByUserId" parameterType="String">
         delete from board_table where userId=#{userId}
     </delete>
+
+    <select id="getBoardSize" resultType="Integer">
+        select count(*) from board_table
+    </select>
 </mapper>

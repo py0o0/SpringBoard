@@ -4,6 +4,9 @@ import com.example.SpringDiary.SpringDiary.Domain.Board;
 import com.example.SpringDiary.SpringDiary.Domain.Comment;
 import com.example.SpringDiary.SpringDiary.Service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 import java.util.List;
 
 @Controller
@@ -24,13 +28,15 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/")
-    public String home(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String home(Model model, @AuthenticationPrincipal UserDetails userDetails,
+                       @PageableDefault(size = 5) Pageable pageable){
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("id", id);
         model.addAttribute("principal", userDetails);
 
-        List<Board>boardList = boardService.getMainBoard();
-        model.addAttribute("boardList", boardList);
+
+        Page<Board> boardPage = boardService.getMainBoard(pageable);
+        model.addAttribute("boardPage", boardPage);
 
         boolean isAdmin = userDetails != null && userDetails.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));

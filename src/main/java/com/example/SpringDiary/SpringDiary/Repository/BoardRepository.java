@@ -3,6 +3,8 @@ package com.example.SpringDiary.SpringDiary.Repository;
 import com.example.SpringDiary.SpringDiary.Domain.Board;
 import com.example.SpringDiary.SpringDiary.Domain.Comment;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +13,6 @@ import java.util.Map;
 public interface BoardRepository {
 
     void write(Board board);
-
-    List<Board> getMainBoard();
 
     Board findById(int boardId);
 
@@ -48,6 +48,7 @@ public interface BoardRepository {
 
     void removeCommentByUserId(String userId);
 
+    List<Board> getMainBoard(Map<String, Object> input);
 
-
+    int getBoardSize();
 }

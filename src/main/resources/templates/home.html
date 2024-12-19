@@ -29,7 +29,7 @@
             <th>조회수</th>
             <th>좋아요</th>
         </tr>
-        <tr th:each ="board:${boardList}">
+        <tr th:each ="board:${boardPage}">
             <td th:text="${board.boardId}"></td>
             <td>
                 <a th:text = "${board.boardTitle}" th:href="'/board/' + ${board.boardId}"></a>
@@ -40,6 +40,13 @@
             <td th:text="${board.boardLike}"></td>
         </tr>
     </table>
+</div>
+<div>
+    <a th:if="${boardPage.hasPrevious()}"
+       th:href="@{'/' + '?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a> <!--pageable객체에 page와 size값을 줌-->
+    <span th:text="${boardPage.number + 1} + ' / ' + ${boardPage.totalPages}"></span>
+    <a th:if="${boardPage.hasNext()}"
+       th:href="@{'/' + '?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
 </div>
 <div>
     <form action="/search" method="post">
