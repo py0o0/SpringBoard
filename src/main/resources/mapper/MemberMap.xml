@@ -15,4 +15,12 @@
     <select id="findById" parameterType="String" resultType="member">
         select * from user_table where userId=#{username}
     </select>
+
+    <select id="getAllUser" resultType="member">
+        select * from user_table where role!='ADMIN'
+    </select>
+
+    <delete id="removeUser" parameterType="String">
+        delete from user_table where userId=#{userId}
+    </delete>
 </mapper>

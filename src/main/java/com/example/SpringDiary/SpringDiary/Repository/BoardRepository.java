@@ -43,4 +43,11 @@ public interface BoardRepository {
     List<Board> boardIdByGetBoard(String id);
 
     List<Board> searchBoard(String input);
+
+    void removeLikeByUserId(String userId);
+
+    void removeCommentByUserId(String userId);
+
+
+
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>작성한 게시글</th>
+    <th>추방</th>
+  </tr>
+    <tr th:each="user:${userList}">
+        <td th:text="${user.userId}" id="userId"></td>
+        <td>
+            <a th:href="'/my/board/' + ${user.userId} ">유저가 작성한 게시글</a>
+        </td>
+        <td>
+            <a th:href="'/admin/deleteUser/' + ${user.userId} ">추방</a>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>

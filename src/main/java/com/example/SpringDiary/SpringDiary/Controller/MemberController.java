@@ -1,14 +1,15 @@
 package com.example.SpringDiary.SpringDiary.Controller;
 
 import com.example.SpringDiary.SpringDiary.Domain.Member;
-import com.example.SpringDiary.SpringDiary.Repository.MemberRepository;
 import com.example.SpringDiary.SpringDiary.Service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,5 +46,21 @@ public class MemberController {
     @GetMapping("/myPage")
     public String myPage(){
         return "myPage";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {return "adminPage";}
+
+    @GetMapping("/admin/userManage")
+    public String adUserMag(Model model) {
+        List<Member> userList = memberService.getAllUser();
+        model.addAttribute("userList", userList);
+        return "userManage";
+    }
+
+    @GetMapping("/admin/deleteUser/{userId}")
+    public String deleteUser(@PathVariable String userId){
+        memberService.deleteUser(userId);
+        return "redirect:/admin/userManage";
     }
 }

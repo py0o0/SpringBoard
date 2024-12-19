@@ -32,6 +32,10 @@ public class BoardController {
         List<Board>boardList = boardService.getMainBoard();
         model.addAttribute("boardList", boardList);
 
+        boolean isAdmin = userDetails != null && userDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
+
         return "home";
     }
 
@@ -122,6 +126,12 @@ public class BoardController {
     @PostMapping("/search")
     public String searchBoard(String input,Model model){
         List<Board>boardList = boardService.searchBoard(input);
+        model.addAttribute("boardList", boardList);
+        return "myBoard";
+    }
+    @GetMapping("/my/board/{userId}")
+    public String myBoard(Model model, @PathVariable String userId){
+        List<Board>boardList = boardService.boardIdByGetBoard(userId);
         model.addAttribute("boardList", boardList);
         return "myBoard";
     }

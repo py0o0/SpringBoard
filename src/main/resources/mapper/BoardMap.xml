@@ -79,4 +79,16 @@
         select * from board_table
         where boardTitle like concat('%', #{input},'%') or boardContents like concat('%', #{input},'%')
     </select>
+
+    <delete id="removeLikeByUserId" parameterType="String">
+        delete from like_table where userId=#{userId}
+    </delete>
+
+    <delete id="removeCommentByUserId" parameterType="String">
+        delete from comment_table where userId=#{userId}
+    </delete>
+
+    <delete id="removeBoardByUserId" parameterType="String">
+        delete from board_table where userId=#{userId}
+    </delete>
 </mapper>
