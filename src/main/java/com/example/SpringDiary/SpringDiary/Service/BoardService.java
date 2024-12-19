@@ -76,8 +76,16 @@ public class BoardService {
         return boardRepository.commentByGetBoard(id);
     }
 
-    public List<Board> boardIdByGetBoard(String id) {
-        return boardRepository.boardIdByGetBoard(id);
+    public Page<Board> boardIdByGetBoard(Pageable pageable, String userId) {
+        int page = pageable.getPageNumber() * pageable.getPageSize();
+        int size = pageable.getPageSize();
+        Map<String, Object> input = new HashMap<>();
+        input.put("userId",userId);
+        input.put("page",page);
+        input.put("size",size);
+        List<Board> boards = boardRepository.boardIdByGetBoard(input);
+        size = boardRepository.userWriteBoardCnt(userId);
+        return new PageImpl<>(boards, pageable, size);
     }
 
     public List<Board> searchBoard(String input) {
@@ -96,4 +104,5 @@ public class BoardService {
         // Page 객체로 변환하여 반환
         return new PageImpl<>(boards, pageable, size);
     }
+
 }

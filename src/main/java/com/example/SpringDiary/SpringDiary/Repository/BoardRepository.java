@@ -40,8 +40,6 @@ public interface BoardRepository {
 
     List<Board> commentByGetBoard(String id);
 
-    List<Board> boardIdByGetBoard(String id);
-
     List<Board> searchBoard(String input);
 
     void removeLikeByUserId(String userId);
@@ -51,4 +49,10 @@ public interface BoardRepository {
     List<Board> getMainBoard(Map<String, Object> input);
 
     int getBoardSize();
+
+    List<Board> boardIdByGetBoard(Map<String, Object> input);
+
+    int userWriteBoardCnt(String id);
+
+    List<Board> boardGetByUserId(String userId);
 }

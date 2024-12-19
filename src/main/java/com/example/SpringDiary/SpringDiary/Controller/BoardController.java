@@ -115,6 +115,7 @@ public class BoardController {
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         List<Board>boardList = boardService.likeByGetBoard(id);
         model.addAttribute("boardList", boardList);
+
         return "myBoard";
     }
 
@@ -127,10 +128,11 @@ public class BoardController {
     }
 
     @GetMapping("/my/board")
-    public String myBoard(Model model){
+    public String myBoard(Model model,@PageableDefault(size = 5) Pageable pageable){
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<Board>boardList = boardService.boardIdByGetBoard(id);
-        model.addAttribute("boardList", boardList);
+        Page<Board>boardPage = boardService.boardIdByGetBoard(pageable,id);
+        model.addAttribute("boardPage", boardPage);
+        model.addAttribute("board",true);
         return "myBoard";
     }
 
@@ -140,10 +142,12 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         return "myBoard";
     }
-    @GetMapping("/my/board/{userId}")
-    public String myBoard(Model model, @PathVariable String userId){
-        List<Board>boardList = boardService.boardIdByGetBoard(userId);
-        model.addAttribute("boardList", boardList);
+    @GetMapping("/userBoard/{userId}")
+    public String myBoard(Model model, @PathVariable String userId, @PageableDefault(size = 5) Pageable pageable){
+        Page<Board>boardPage = boardService.boardIdByGetBoard(pageable,userId);
+        model.addAttribute("boardPage", boardPage);
+        model.addAttribute("admin",true);
+        model.addAttribute("userId", userId);
         return "myBoard";
     }
 }

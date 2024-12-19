@@ -72,8 +72,8 @@
         where boardId in(select boardId from comment_table where userId=#{id})
     </select>
 
-    <select id="boardIdByGetBoard" parameterType="String" resultType="board">
-        select * from board_table where userId=#{id}
+    <select id="boardIdByGetBoard" resultType="board">
+        select * from board_table where userId=#{userId} order by boardId asc limit #{page}, #{size}
     </select>
 
     <select id="searchBoard" parameterType="String" resultType="board">
@@ -95,5 +95,13 @@
 
     <select id="getBoardSize" resultType="Integer">
         select count(*) from board_table
+    </select>
+
+    <select id="userWriteBoardCnt" parameterType="String" resultType="Integer">
+        select count(*) from board_table where userId=#{userId}
+    </select>
+
+    <select id="boardGetByUserId" parameterType="String" resultType="board">
+        select * from board_table where userId=#{userId} order by boardId asc
     </select>
 </mapper>

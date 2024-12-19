@@ -35,7 +35,7 @@ public class MemberService {
         boardRepository.removeLikeByUserId(userId);
         boardRepository.removeCommentByUserId(userId);
 
-        List<Board> boardList = boardRepository.boardIdByGetBoard(userId);
+        List<Board> boardList = boardRepository.boardGetByUserId(userId);
         for (Board board : boardList) {
             boardRepository.removeLike(board.getBoardId());
             boardRepository.removeComment(board.getBoardId());

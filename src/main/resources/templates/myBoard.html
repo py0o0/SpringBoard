@@ -14,7 +14,7 @@
         <th>조회수</th>
         <th>좋아요</th>
     </tr>
-    <tr th:each ="board:${boardList}">
+    <tr th:each ="board:${boardPage}">
         <td th:text="${board.boardId}"></td>
         <td>
             <a th:text = "${board.boardTitle}" th:href="'/board/' + ${board.boardId}"></a>
@@ -25,5 +25,18 @@
         <td th:text="${board.boardLike}"></td>
     </tr>
 </table>
+
+<a th:if="${board!=null && boardPage.hasPrevious()}"
+   th:href="@{'/my/board?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
+<span th:if="${board!=null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
+<a th:if="${board!=null && boardPage.hasNext()}"
+   th:href="@{'/my/board?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+
+<a th:if="${admin!=null && boardPage.hasPrevious()}"
+   th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
+<span th:if="${admin!=null}" th:text="${boardPage.number + 1} +'/' + ${boardPage.totalPages}"></span>
+<a th:if="${admin!=null && boardPage.hasNext()}"
+   th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+
 </body>
 </html>

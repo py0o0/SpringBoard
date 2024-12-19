@@ -14,13 +14,17 @@
     <tr th:each="user:${userList}">
         <td th:text="${user.userId}" id="userId"></td>
         <td>
-            <a th:href="'/my/board/' + ${user.userId} ">유저가 작성한 게시글</a>
+            <a th:href="'/userBoard/' + ${user.userId} ">유저가 작성한 게시글</a>
         </td>
         <td>
             <a th:href="'/admin/deleteUser/' + ${user.userId} ">추방</a>
         </td>
     </tr>
-
 </table>
+<!--<a th:if="${boardPage.hasPrevious()}"-->
+<!--   th:href="@{'/my/board?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>-->
+<!--<span th:text="${boardPage.number} + '/' + ${boardPage.totalPages}"></span>-->
+<!--<a th:if="${boardPage.hasNext()}"-->
+<!--   th:href="@{'/my/board?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>-->
 </body>
 </html>
