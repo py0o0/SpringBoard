@@ -38,5 +38,10 @@
 <a th:if="${admin!=null && boardPage.hasNext()}"
    th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
 
+<a th:if="${comment!=null && boardPage.hasPrevious()}"
+   th:href="@{'/my/comment?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
+<span th:if="${comment != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
+<a th:if="${comment!=null && boardPage.hasNext()}"
+   th:href="@{'/my/comment?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
 </body>
 </html>

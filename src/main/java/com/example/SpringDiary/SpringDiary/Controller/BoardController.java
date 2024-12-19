@@ -120,10 +120,11 @@ public class BoardController {
     }
 
     @GetMapping("/my/comment")
-    public String myComment(Model model){
+    public String myComment(Model model, @PageableDefault(size = 5) Pageable pageable){
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<Board>boardList = boardService.commentByGetBoard(id);
-        model.addAttribute("boardList", boardList);
+        Page<Board>boardPage = boardService.commentByGetBoard(pageable,id);
+        model.addAttribute("boardPage", boardPage);
+        model.addAttribute("comment",true);
         return "myBoard";
     }
 

@@ -72,8 +72,17 @@ public class BoardService {
         return boardRepository.likeByGetBoard(id);
     }
 
-    public List<Board> commentByGetBoard(String id) {
-        return boardRepository.commentByGetBoard(id);
+    public  Page<Board> commentByGetBoard(Pageable pageable,String userId){
+        int page = pageable.getPageNumber() * pageable.getPageSize();
+        int size = pageable.getPageSize();
+        Map<String, Object> input = new HashMap<>();
+        input.put("userId",userId);
+        input.put("page",page);
+        input.put("size",size);
+        List<Board> boards = boardRepository.commentByGetBoard(input);
+        System.out.println(boards);
+        size = boardRepository.boardGetByCommentCnt(userId);
+        return new PageImpl<>(boards,pageable,size);
     }
 
     public Page<Board> boardIdByGetBoard(Pageable pageable, String userId) {

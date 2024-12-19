@@ -67,13 +67,14 @@
         where boardId in (select boardId from like_table where userId=#{id})
     </select>
 
-    <select id="commentByGetBoard" parameterType="String" resultType="board">
+    <select id="commentByGetBoard" resultType="board">
         select * from board_table
-        where boardId in(select boardId from comment_table where userId=#{id})
+        where boardId in(select boardId from comment_table where userId=#{userId} order by boardId desc)
+        limit #{page}, #{size}
     </select>
 
     <select id="boardIdByGetBoard" resultType="board">
-        select * from board_table where userId=#{userId} order by boardId asc limit #{page}, #{size}
+        select * from board_table where userId=#{userId} order by boardId desc limit #{page}, #{size}
     </select>
 
     <select id="searchBoard" parameterType="String" resultType="board">
@@ -102,6 +103,11 @@
     </select>
 
     <select id="boardGetByUserId" parameterType="String" resultType="board">
-        select * from board_table where userId=#{userId} order by boardId asc
+        select * from board_table where userId=#{userId} order by boardId desc
+    </select>
+
+    <select id="boardGetByCommentCnt" parameterType="String" resultType="Integer">
+        select count(*) from board_table where boardId in(select c.boardId from comment_table c
+                                                                           where userId=#{userId})
     </select>
 </mapper>
