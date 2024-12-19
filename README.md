@@ -5,21 +5,17 @@
 2. [사용 기술](#사용-기술)
 3. [주요 기능](#주요-기능)
 4. [API 명세](#api-명세)
-<br></br>
 
 # 프로젝트 목적
 
 MCV 패턴, MyBatis, SpringSecurity 학습
-<hr/>
 
 # 프로젝트 소개
 
 스프링을 배우고 스프링으로 혼자 간단히 만들 수 있는 게시판을 직접 만들어보고 배우기 위해 제작하였습니다.
 
-
  ## 테이블 스키마
- <img src= "https://github.com/user-attachments/assets/f41ca2b9-8290-4518-9750-77b15b1c1596" alt="DB" width="100%" height="auto"> 
-<hr/>
+ <img src= "https://github.com/user-attachments/assets/2d955953-6c23-4493-b8e1-baed1af11ea6" alt="DB" width="100%" height="auto"> 
 
 # 사용 기술
 
@@ -41,7 +37,6 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 ## 3-2 프론트엔드
 - **HTML**
 - **JavaScript**
-<hr/>
 
 # 주요 기능
 
@@ -52,11 +47,11 @@ MCV 패턴, MyBatis, SpringSecurity 학습
   - client에서 id, password 입력
  
   - **회원가입**
-  - id 중목 검사
+    - id 중목 검사
  
   - **로그인**
-  - id, password DB 조회
-  - 로그인 성공 시 Security세션에 저장
+    - id, password DB 조회
+    - 로그인 성공 시 Security세션에 저장
 
 - **게시글**: 
   - 로그인 상태일 시 게시글 작성 가능
@@ -72,12 +67,9 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 - **마이페이지**: 
   - 로그인 상태일 시 자신이 작성한 글, 좋아요한 글, 댓글을 남긴 글 조회 가능
 
-<hr/>
-
 #  API 명세
 
 ## Member API
-
 
 | HTTP 메서드 | URL           | 설명               | 요청 파라미터                                               | 응답                        |
 |-------------|---------------|--------------------|-----------------------------------------------------------|-----------------------------|
@@ -87,8 +79,6 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 | POST        | /joinProc     | 회원가입 요청      | Body: { "userId": "string", "userPass": "string" } | 성공: Redirect("/join?success=true") 실패: Redirect("/join?error=true") |
 | GET         | /logout       | 로그아웃 요청      | 없음                                                      | 없음                        |
 | GET         | /myPage       | 마이페이지 요청    | 없음                                                      | HTML 페이지                 |                                                                                                                                   | Redirect (`/`)               | 로그아웃 후 메인 페이지로 리다이렉션.                                    |
-
-<hr/>
 
 ## Board API
 
