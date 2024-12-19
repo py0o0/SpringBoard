@@ -51,7 +51,8 @@ public class BoardController {
     }
 
     @GetMapping("/board/{boardId}")
-    public String board(@PathVariable int boardId, Model model){
+    public String board(@PathVariable int boardId, Model model,
+    @AuthenticationPrincipal UserDetails userDetails){
         Board board = boardService.findById(boardId);
         model.addAttribute("board", board);
 
@@ -60,6 +61,10 @@ public class BoardController {
 
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("id",id);
+
+        boolean isAdmin = userDetails != null && userDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
         return "board";
     }
 

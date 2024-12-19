@@ -40,6 +40,9 @@
     <a th:href="@{/board/modify/{boardId}(boardId=${board.boardId})}">수정하기</a>
     <a th:href="@{/board/remove/{boardId}(boardId=${board.boardId})}">삭제하기</a>
 </div>
+<div th:if="${isAdmin==true}">
+    <a th:href="@{/board/remove/{boardId}(boardId=${board.boardId})}">관리자 권한 - 삭제하기</a>
+</div>
 <div>
     <table>
         <tr>
