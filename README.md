@@ -42,6 +42,7 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 
 - **접근 권한**:
   - Anonymous 사용자:로그인, 회원가입, 홈 접근 가능
+  - ADMIN: 유저 추방, 게시글 삭제 가능
 
 - **회원 가입/로그인**: 
   - client에서 id, password 입력
