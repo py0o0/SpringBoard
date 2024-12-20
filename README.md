@@ -136,7 +136,7 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 | **GET**     | `/userBoard/{userId}`         | 특정 사용자가 작성한 게시글 목록 요청 | Path: `userId` (사용자 ID), Query: `page` (페이지 번호), `size` (페이지 크기, 기본값 5)             | HTML 페이지                         |
 
 
-# SnapShop
+# SnapShot
 
 ## 시스템 개요
 아래는 프로젝트의 주요 화면 스냅샷입니다. 기능별로 이미지를 분류하고 간단한 설명을 추가하였습니다.
