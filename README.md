@@ -14,8 +14,8 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 
 스프링을 배우고 스프링으로 혼자 간단히 만들 수 있는 게시판을 직접 만들어보고 배우기 위해 제작하였습니다.
 
- ## 테이블 스키마
- <img src= "https://github.com/user-attachments/assets/2d955953-6c23-4493-b8e1-baed1af11ea6" alt="DB" width="100%" height="auto"> 
+ ## ERD
+ <img src= "https://github.com/user-attachments/assets/dfe5eb02-32ff-4d54-9a16-46ba41f6222f" alt="DB" width="100%" height="auto"> 
 
 # 사용 기술
 
