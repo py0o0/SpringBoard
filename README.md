@@ -37,6 +37,7 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 ## 3-2 프론트엔드
 - **HTML**
 - **JavaScript**
+- **css**
 
 # 주요 기능
 
@@ -73,30 +74,38 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 
 ## Member API
 
-| HTTP 메서드 | URL           | 설명               | 요청 파라미터                                               | 응답                        |
-|-------------|---------------|--------------------|-----------------------------------------------------------|-----------------------------|
-| GET         | /login        | 로그인 페이지 요청 | 없음                                                      | HTML 페이지                 |
-| POST        | /loginProc    | 로그인 요청        | 없음                                                      | Redirect("/")               |
-| GET         | /join         | 회원가입 페이지 요청| 없음                                                      | HTML 페이지                 |
-| POST        | /joinProc     | 회원가입 요청      | Body: { "userId": "string", "userPass": "string" } | 성공: Redirect("/join?success=true") 실패: Redirect("/join?error=true") |
-| GET         | /logout       | 로그아웃 요청      | 없음                                                      | 없음                        |
-| GET         | /myPage       | 마이페이지 요청    | 없음                                                      | HTML 페이지                 |                                                                                                                                   | Redirect (`/`)               | 로그아웃 후 메인 페이지로 리다이렉션.                                    |
+| HTTP 메서드 | URL               | 설명                          | 요청 파라미터                                               | 응답                                          |
+|-------------|-------------------|-------------------------------|-----------------------------------------------------------|-----------------------------------------------|
+| **GET**     | `/login`           | 로그인 페이지 요청            | 없음                                                      | HTML 페이지                                   |
+| **POST**    | `/loginProc`       | 로그인 처리                    | 없음                                                      | Redirect("/")                                 |
+| **GET**     | `/join`            | 회원가입 페이지 요청          | 없음                                                      | HTML 페이지                                   |
+| **POST**    | `/joinProc`        | 회원가입 처리                  | Body: { "userId": "string", "userPass": "string" }         | 성공: `Redirect("/join?success=true")`<br>실패: `Redirect("/join?error=true")` |
+| **GET**     | `/logout`          | 로그아웃 처리                  | 없음                                                      | 없음                                          |
+| **GET**     | `/myPage`          | 마이페이지 요청                | 없음                                                      | HTML 페이지                                   |
+| **GET**     | `/admin`           | 관리자 페이지 요청             | 없음                                                      | HTML 페이지                                   |
+| **GET**     | `/admin/userManage`| 유저 관리 페이지 요청          | 없음                                                      | HTML 페이지 (유저 목록, 페이징 처리)         |
+| **GET**     | `/admin/deleteUser/{userId}` | 특정 사용자 삭제 요청  | Path: `userId` (삭제할 사용자 ID)                        | Redirect(`/admin/userManage`)                 |
+| **GET**     | `/admin/join`      | 관리자 회원가입 페이지 요청    | 없음                                                      | HTML 페이지                                   |
+| **POST**    | `/admin/joinProc`  | 관리자 회원가입 처리            | Body: { "userId": "string", "userPass": "string" }         | 성공: `Redirect("/admin/join?success=true")`<br>실패: `Redirect("/admin/join?error=true")` |
+
 
 ## Board API
 
-| HTTP 메서드 | URL                         | 설명                         | 요청 파라미터                                                                          | 응답                       |
-|-------------|-----------------------------|------------------------------|---------------------------------------------------------------------------------------|----------------------------|
-| GET         | /                           | 홈 페이지 요청                | Model: 사용자 정보(id, principal), 게시글 리스트(boardList)                           | HTML 페이지 ("home")       |
-| GET         | /writePage                  | 게시글 작성 페이지 요청        | 없음                                                                                  | HTML 페이지 ("writePage")  |
-| POST        | /write                      | 게시글 작성 요청              | Body: { "title": "string", "content": "string" }                                      | Redirect("/")              |
-| GET         | /board/{boardId}            | 게시글 상세 조회              | PathVariable: boardId<br>Model: 게시글 정보(board), 댓글 리스트(commentList), 사용자 ID | HTML 페이지 ("board")      |
-| GET         | /like                       | 게시글 좋아요 요청            | Query: boardId, userId                                                                | JSON (Boolean 성공 여부)   |
-| GET         | /commentWrite/{boardId}     | 댓글 작성 페이지 요청          | PathVariable: boardId                                                                 | HTML 페이지 ("commentWrite") |
-| POST        | /commentWrite/{boardId}     | 댓글 작성 요청                | PathVariable: boardId<br>Body: { "content": "string" }                                | Redirect("/board/{boardId}") |
-| GET         | /board/modify/{boardId}     | 게시글 수정 페이지 요청        | PathVariable: boardId                                                                 | HTML 페이지 ("boardModify") |
-| POST        | /modify/{boardId}           | 게시글 수정 요청              | PathVariable: boardId<br>Body: { "title": "string", "content": "string" }             | Redirect("/board/{boardId}") |
-| GET         | /board/remove/{boardId}     | 게시글 삭제 요청              | PathVariable: boardId                                                                 | Redirect("/")              |
-| GET         | /my/like                    | 내가 좋아요 누른 글 조회       | Model: 좋아요한 게시글 리스트(boardList)                                              | HTML 페이지 ("myBoard")    |
-| GET         | /my/comment                 | 내가 댓글을 단 글 조회         | Model: 댓글을 단 게시글 리스트(boardList)                                             | HTML 페이지 ("myBoard")    |
-| GET         | /my/board                   | 내가 작성한 글 조회            | Model: 작성한 게시글 리스트(boardList)                                                | HTML 페이지 ("myBoard")    |
-| POST        | /search                     | 게시글 검색 요청              | Body: { "input": "string" }                                                           | HTML 페이지 ("myBoard")    |
+| HTTP 메서드 | URL                           | 설명                                 | 요청 파라미터                                                                                       | 응답                                |
+|-------------|-------------------------------|--------------------------------------|----------------------------------------------------------------------------------------------------|-------------------------------------|
+| **GET**     | `/`                           | 메인 페이지 요청                     | Query: `page` (페이지 번호), `size` (페이지 크기, 기본값 5)                                         | HTML 페이지                         |
+| **GET**     | `/writePage`                  | 글 작성 페이지 요청                  | 없음                                                                                               | HTML 페이지                         |
+| **POST**    | `/write`                      | 글 작성 요청                         | Body: { "boardTitle": "string", "boardContents": "string" }                                         | Redirect("/")                       |
+| **GET**     | `/board/{boardId}`            | 게시글 상세보기 요청                 | Path: `boardId` (게시글 ID)                                                                        | HTML 페이지                         |
+| **GET**     | `/like`                       | 게시글 좋아요 요청                   | Query: `boardId` (게시글 ID), `userId` (사용자 ID)                                                 | JSON: { "success": true/false }     |
+| **GET**     | `/commentWrite/{boardId}`     | 댓글 작성 페이지 요청                | Path: `boardId` (게시글 ID)                                                                        | HTML 페이지                         |
+| **POST**    | `/commentWrite/{boardId}`     | 댓글 작성 요청                       | Path: `boardId` (게시글 ID), Body: { "commentContents": "string" }                                 | Redirect(`/board/{boardId}`)        |
+| **GET**     | `/board/modify/{boardId}`     | 게시글 수정 페이지 요청              | Path: `boardId` (게시글 ID)                                                                        | HTML 페이지                         |
+| **POST**    | `/modify/{boardId}`           | 게시글 수정 요청                     | Path: `boardId` (게시글 ID), Body: { "boardTitle": "string", "boardContents": "string" }           | Redirect(`/board/{boardId}`)        |
+| **GET**     | `/board/remove/{boardId}`     | 게시글 삭제 요청                     | Path: `boardId` (게시글 ID)                                                                        | Redirect("/")                       |
+| **GET**     | `/my/like`                    | 내가 좋아한 게시글 목록 요청         | Query: `page` (페이지 번호), `size` (페이지 크기, 기본값 5)                                         | HTML 페이지                         |
+| **GET**     | `/my/comment`                 | 내가 댓글 작성한 게시글 목록 요청    | Query: `page` (페이지 번호), `size` (페이지 크기, 기본값 5)                                         | HTML 페이지                         |
+| **GET**     | `/my/board`                   | 내가 작성한 게시글 목록 요청         | Query: `page` (페이지 번호), `size` (페이지 크기, 기본값 5)                                         | HTML 페이지                         |
+| **POST**    | `/search`                     | 게시글 검색 요청                     | Body: { "input": "string" }                                                                        | HTML 페이지                         |
+| **GET**     | `/userBoard/{userId}`         | 특정 사용자가 작성한 게시글 목록 요청 | Path: `userId` (사용자 ID), Query: `page` (페이지 번호), `size` (페이지 크기, 기본값 5)             | HTML 페이지                         |
+
