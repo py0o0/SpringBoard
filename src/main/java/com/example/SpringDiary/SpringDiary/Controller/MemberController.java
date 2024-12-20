@@ -3,13 +3,14 @@ package com.example.SpringDiary.SpringDiary.Controller;
 import com.example.SpringDiary.SpringDiary.Domain.Member;
 import com.example.SpringDiary.SpringDiary.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,9 +53,9 @@ public class MemberController {
     public String admin() {return "adminPage";}
 
     @GetMapping("/admin/userManage")
-    public String adUserMag(Model model) {
-        List<Member> userList = memberService.getAllUser();
-        model.addAttribute("userList", userList);
+    public String adUserMag(Model model, @PageableDefault(size=5) Pageable pageable) {
+        Page<Member> userPage = memberService.getAllUser(pageable);
+        model.addAttribute("userPage", userPage);
         return "userManage";
     }
 

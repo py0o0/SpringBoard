@@ -12,7 +12,7 @@
     <th>작성한 게시글</th>
     <th>추방</th>
   </tr>
-    <tr th:each="user:${userList}">
+    <tr th:each="user:${userPage}">
         <td th:text="${user.userId}" id="userId"></td>
         <td>
             <a th:href="'/userBoard/' + ${user.userId} ">유저가 작성한 게시글</a>
@@ -22,10 +22,10 @@
         </td>
     </tr>
 </table>
-<!--<a th:if="${boardPage.hasPrevious()}"-->
-<!--   th:href="@{'/my/board?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>-->
-<!--<span th:text="${boardPage.number} + '/' + ${boardPage.totalPages}"></span>-->
-<!--<a th:if="${boardPage.hasNext()}"-->
-<!--   th:href="@{'/my/board?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>-->
+<a th:if="${userPage.hasPrevious()}"
+   th:href="'/admin/userManage?page=' + (${userPage.number - 1}) + '&size=5'">이전</a>
+<span th:text="${userPage.number + 1} + '/' + ${userPage.totalPages}"></span>
+<a th:if="${userPage.hasNext()}"
+   th:href="'/admin/userManage?page=' + (${userPage.number + 1}) + '&size=5'">다음</a>
 </body>
 </html>

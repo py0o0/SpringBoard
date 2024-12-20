@@ -5,10 +5,15 @@ import com.example.SpringDiary.SpringDiary.Domain.Member;
 import com.example.SpringDiary.SpringDiary.Repository.BoardRepository;
 import com.example.SpringDiary.SpringDiary.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +32,16 @@ public class MemberService {
         return true;
     }
 
-    public List<Member> getAllUser() {
-        return memberRepository.getAllUser();
+    public Page<Member> getAllUser(Pageable pageable) {
+        int page = pageable.getPageNumber() * pageable.getPageSize();
+        int size = pageable.getPageSize();
+
+        Map<String, Object> input = new HashMap<>();
+        input.put("page", page);
+        input.put("size", size);
+        List<Member> members = memberRepository.getAllUser(input);
+        size = memberRepository.getUserCnt();
+        return new PageImpl<>(members, pageable, size);
     }
 
     public void deleteUser(String userId) {

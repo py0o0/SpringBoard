@@ -1,55 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시판</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td a {
+            color: #007bff;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .pagination a:hover {
+            background-color: #0056b3;
+        }
+
+        .pagination span {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .pagination .disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<table>
-    <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성시간</th>
-        <th>조회수</th>
-        <th>좋아요</th>
-    </tr>
-    <tr th:each ="board:${boardPage}">
-        <td th:text="${board.boardId}"></td>
-        <td>
-            <a th:text = "${board.boardTitle}" th:href="'/board/' + ${board.boardId}"></a>
-        </td>
-        <td th:text="${board.userId}"></td>
-        <td th:text="${board.boardCreated}"></td>
-        <td th:text="${board.boardPass}"></td>
-        <td th:text="${board.boardLike}"></td>
-    </tr>
-</table>
+<div class="container">
+    <h1>게시판</h1>
+    <a href="/">홈</a><br>
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성시간</th>
+            <th>조회수</th>
+            <th>좋아요</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board:${boardPage}">
+            <td th:text="${board.boardId}"></td>
+            <td><a th:text="${board.boardTitle}" th:href="'/board/' + ${board.boardId}"></a></td>
+            <td th:text="${board.userId}"></td>
+            <td th:text="${board.boardCreated}"></td>
+            <td th:text="${board.boardPass}"></td>
+            <td th:text="${board.boardLike}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-<a th:if="${board!=null && boardPage.hasPrevious()}"
-   th:href="@{'/my/board?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
-<span th:if="${board!=null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
-<a th:if="${board!=null && boardPage.hasNext()}"
-   th:href="@{'/my/board?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+    <!-- 페이지 네비게이션 -->
+    <div class="pagination">
+        <a th:if="${board != null && boardPage.hasPrevious()}"
+           th:href="@{'/my/board?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
 
-<a th:if="${admin!=null && boardPage.hasPrevious()}"
-   th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
-<span th:if="${admin!=null}" th:text="${boardPage.number + 1} +'/' + ${boardPage.totalPages}"></span>
-<a th:if="${admin!=null && boardPage.hasNext()}"
-   th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+        <span th:if="${board != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
 
-<a th:if="${comment!=null && boardPage.hasPrevious()}"
-   th:href="@{'/my/comment?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
-<span th:if="${comment != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
-<a th:if="${comment!=null && boardPage.hasNext()}"
-   th:href="@{'/my/comment?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+        <a th:if="${board != null && boardPage.hasNext()}"
+           th:href="@{'/my/board?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+    </div>
 
-<a th:if="${like != null && boardPage.hasPrevious()}"
-   th:href="@{'/my/like?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
-<span th:if="${like != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
-<a th:if="${like != null && boardPage.hasNext()}"
-   th:href="@{'/my/like?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+    <div class="pagination">
+        <a th:if="${admin != null && boardPage.hasPrevious()}"
+           th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
 
+        <span th:if="${admin != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
+
+        <a th:if="${admin != null && boardPage.hasNext()}"
+           th:href="@{'/userBoard/' + ${userId} + '?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+    </div>
+
+    <div class="pagination">
+        <a th:if="${comment != null && boardPage.hasPrevious()}"
+           th:href="@{'/my/comment?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
+
+        <span th:if="${comment != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
+
+        <a th:if="${comment != null && boardPage.hasNext()}"
+           th:href="@{'/my/comment?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+    </div>
+
+    <div class="pagination">
+        <a th:if="${like != null && boardPage.hasPrevious()}"
+           th:href="@{'/my/like?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
+
+        <span th:if="${like != null}" th:text="${boardPage.number + 1} + '/' + ${boardPage.totalPages}"></span>
+
+        <a th:if="${like != null && boardPage.hasNext()}"
+           th:href="@{'/my/like?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
+    </div>
+</div>
 </body>
 </html>

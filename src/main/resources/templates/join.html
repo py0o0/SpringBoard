@@ -2,28 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>회원가입</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container a {
+            display: inline-block;
+            margin-bottom: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .container a:hover {
+            color: #0056b3;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .form-submit:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<form action="/joinProc" method="post">
-    <input type="text" name="userId" placeholder="아이디를 입력하세요">
-    <input type="text" name="userPass" placeholder="비밀번호를 입력하세요">
-    <input type="submit" value="회원가입">
-</form>
-</body>
+<div class="container">
+    <a href="/">홈</a>
+    <form action="/joinProc" method="post">
+        <input type="text" name="userId" placeholder="아이디를 입력하세요" class="form-input">
+        <input type="text" name="userPass" placeholder="비밀번호를 입력하세요" class="form-input">
+        <input type="submit" value="회원가입" class="form-submit">
+    </form>
+</div>
 <script>
     window.onload = function(){
         const url = new URLSearchParams(window.location.search);
-        const suc = url.get('success')
-        const err = url.get('error')
+        const suc = url.get('success');
+        const err = url.get('error');
         if(suc){
-            alert('회원가입 성공')
+            alert('회원가입 성공');
             window.location.href="/login";
         }
         if(err){
-            alert('아이디가 중복 됩니다.')
+            alert('아이디가 중복 됩니다.');
         }
     }
 </script>
+</body>
 </html>

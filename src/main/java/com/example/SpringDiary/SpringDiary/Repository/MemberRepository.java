@@ -3,12 +3,13 @@ import com.example.SpringDiary.SpringDiary.Domain.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Mapper
 public interface MemberRepository {
 
-    List<Member> getAllUser();
+    List<Member> getAllUser(Map<String, Object> input);
 
     void joinProc(Member member);
 
@@ -17,4 +18,6 @@ public interface MemberRepository {
     Member findById(String username);
 
     void removeUser(String userId);
+
+    int getUserCnt();
 }

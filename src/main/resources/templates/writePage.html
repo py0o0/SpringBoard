@@ -1,15 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>글 작성</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"], textarea {
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            padding: 12px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .back-link:hover {
+            background-color: #218838;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<form action="write" method="post">
-    <input type="text" placeholder="제목" name="boardTitle" id="boardTitle">
-    <textarea type="text" placeholder="내용" name="boardContents" id="boardContents"></textarea>
-    <input type="submit" value="글 작성">
-</form>
+<div class="container">
+    <a href="/" class="back-link">홈</a>
+    <h1>글 작성</h1>
+    <form action="write" method="post">
+        <input type="text" placeholder="제목" name="boardTitle" id="boardTitle" required>
+        <textarea placeholder="내용" name="boardContents" id="boardContents" required></textarea>
+        <input type="submit" value="글 작성">
+    </form>
+</div>
 </body>
 </html>

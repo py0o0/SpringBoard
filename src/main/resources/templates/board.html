@@ -2,80 +2,183 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시글 상세</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background: #f4f4f9;
+            color: #333;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        table tr:hover {
+            background: #f1f1f1;
+        }
+
+        .button-group {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .button-group button, .button-group a {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007BFF;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .button-group button:hover, .button-group a:hover {
+            background-color: #0056b3;
+        }
+
+        .comments-section {
+            margin-top: 30px;
+        }
+
+        .comments-section table {
+            margin-top: 10px;
+        }
+
+        .admin-action {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<table>
-    <tr>
-        <th>코드</th>
-        <td th:text="${board.boardId}" id="boardId"></td>
-    </tr>
-    <tr>
-        <th>조회수</th>
-        <td th:text="${board.boardPass}"></td>
-    </tr>
-    <tr>
-        <th>작성자</th>
-        <td th:text="${board.userId}" id="userId"></td>
-    </tr>
-    <tr>
-        <th>제목</th>
-        <td th:text="${board.boardTitle}"></td>
-    </tr>
-    <tr>
-        <th>내용</th>
-        <td th:text="${board.boardContents}"></td>
-    </tr>
-    <tr>
-        <th>좋아요</th>
-        <td th:text="${board.boardLike}"></td>
-    </tr>
-</table>
-
-<div>
-    <button type="button" onclick="like()">좋아요</button>
-    <button tyle="button" onclick="commentWrite()">댓글 작성</button>
-</div>
-<div th:if="${id == board.userId}">
-    <a th:href="@{/board/modify/{boardId}(boardId=${board.boardId})}">수정하기</a>
-    <a th:href="@{/board/remove/{boardId}(boardId=${board.boardId})}">삭제하기</a>
-</div>
-<div th:if="${isAdmin==true}">
-    <a th:href="@{/board/remove/{boardId}(boardId=${board.boardId})}">관리자 권한 - 삭제하기</a>
-</div>
-<div>
+<div class="container">
+    <h1>게시글 상세</h1>
+    <a href="/">홈</a>
     <table>
         <tr>
-            <th>작성자</th>
-            <th>내용</th>
+            <th>코드</th>
+            <td th:text="${board.boardId}" id="boardId"></td>
         </tr>
-        <tr th:each="comment:${commentList}">
-            <td th:text="${comment.userId}"></td>
-            <td th:text="${comment.commentContents}"></td>
+        <tr>
+            <th>조회수</th>
+            <td th:text="${board.boardPass}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td th:text="${board.userId}" id="userId"></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td th:text="${board.boardTitle}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td th:text="${board.boardContents}"></td>
+        </tr>
+        <tr>
+            <th>좋아요</th>
+            <td th:text="${board.boardLike}"></td>
         </tr>
     </table>
-</div>
-</body>
-<script>
-    async function like(){
-        const userId = document.getElementById("userId").textContent
-        const boardId = document.getElementById("boardId").textContent
 
-        try{
-            const res = await fetch(`/like?userId=${userId}&boardId=${boardId}`,{
-                method:'GET',
-            })
+    <div class="button-group">
+        <button type="button" onclick="like()">좋아요</button>
+        <button type="button" onclick="commentWrite()">댓글 작성</button>
+    </div>
+
+    <div th:if="${id == board.userId}" class="button-group">
+        <a th:href="@{/board/modify/{boardId}(boardId=${board.boardId})}">수정하기</a>
+        <a th:href="@{/board/remove/{boardId}(boardId=${board.boardId})}" class="admin-action">삭제하기</a>
+    </div>
+
+    <div th:if="${isAdmin == true}" class="button-group">
+        <a th:href="@{/board/remove/{boardId}(boardId=${board.boardId})}" class="admin-action">관리자 권한 - 삭제하기</a>
+    </div>
+
+    <div class="comments-section">
+        <h2>댓글</h2>
+        <table>
+            <tr>
+                <th>작성자</th>
+                <th>내용</th>
+            </tr>
+            <tr th:each="comment:${commentList}">
+                <td th:text="${comment.userId}"></td>
+                <td th:text="${comment.commentContents}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    async function like() {
+        const userId = document.getElementById("userId").textContent;
+        const boardId = document.getElementById("boardId").textContent;
+
+        try {
+            const res = await fetch(`/like?userId=${userId}&boardId=${boardId}`, {
+                method: 'GET',
+            });
             const data = await res.json();
-            console.log(data)
-            if(!data) alert("좋아요 하실 수 없는 게시물")
-        }catch(err){
+            console.log(data);
+            if (!data) alert("좋아요 하실 수 없는 게시물");
+        } catch (err) {
             console.log(err);
         }
     }
-    function commentWrite(){
+
+    function commentWrite() {
         const boardId = document.getElementById("boardId").textContent;
-        window.location.href ="/commentWrite/" + `${boardId}`;
+        window.location.href = "/commentWrite/" + `${boardId}`;
     }
 </script>
+</body>
 </html>

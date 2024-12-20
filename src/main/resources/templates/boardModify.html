@@ -2,14 +2,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>글 수정</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"], textarea {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .button-group {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .button-group a {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007BFF;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button-group a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<form th:action="@{/modify/{boardId}(boardId=${boardId})}" method="post">
-    <input type="text" placeholder="제목" name="boardTitle" id="boardTitle">
-    <textarea type="text" placeholder="내용" name="boardContents" id="boardContents"></textarea>
-    <input type="submit" value="글 수정">
-</form>
+<div class="container">
+    <h1>글 수정</h1>
+    <a href="/">홈</a><br>
+    <form th:action="@{/modify/{boardId}(boardId=${boardId})}" method="post">
+        <input type="text" placeholder="제목" name="boardTitle" id="boardTitle">
+        <textarea th:placeholder="내용" name="boardContents" id="boardContents"></textarea>
+        <input type="submit" value="글 수정">
+    </form>
+    <div class="button-group">
+        <a href="/">취소</a>
+    </div>
+</div>
 </body>
 </html>

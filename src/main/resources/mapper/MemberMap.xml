@@ -17,10 +17,14 @@
     </select>
 
     <select id="getAllUser" resultType="member">
-        select * from user_table where role!='ADMIN'
+        select * from user_table where role!='ADMIN' limit #{page}, #{size}
     </select>
 
     <delete id="removeUser" parameterType="String">
         delete from user_table where userId=#{userId}
     </delete>
+
+    <select id="getUserCnt" resultType="Integer">
+        select count(*) from user_table where role != 'ADMIN'
+    </select>
 </mapper>

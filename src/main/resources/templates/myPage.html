@@ -1,13 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>내 정보</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        a {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        a:active {
+            background-color: #004085;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 20px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .back-link:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<a href="/my/comment">내가 댓글을 작성한 게시글</a><br>
-<a href="/my/like">내가 좋아한 게시글</a><br>
-<a href="/my/board">내가 작성한 게시글</a>
+<div class="container">
+    <h1>내 정보</h1>
+    <a href="/my/comment">내가 댓글을 작성한 게시글</a>
+    <a href="/my/like">내가 좋아한 게시글</a>
+    <a href="/my/board">내가 작성한 게시글</a>
+    <a class="back-link" href="/">홈으로 돌아가기</a>
+</div>
 </body>
 </html>

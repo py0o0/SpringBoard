@@ -1,23 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>로그인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<a href="/">홈</a><br>
-<form action="/loginProc" method="post">
-    <input placeholder="ID를 입력하세요" id="username" name="username"><br>
-    <input placeholder="비밀번호를 입력하세요" id="password" name="password"><br/>
-    <input type="submit" value="로그인">
-</form>
-</body>
+<div class="login-container">
+    <h2>로그인</h2>
+    <form action="/loginProc" method="post">
+        <input type="text" placeholder="ID를 입력하세요" id="username" name="username"><br>
+        <input type="password" placeholder="비밀번호를 입력하세요" id="password" name="password"><br/>
+        <input type="submit" value="로그인">
+    </form>
+    <div class="error-message" id="error-message"></div>
+</div>
+
 <script>
-    window.onload = function(){
-        const url = new URLSearchParams(window.location.search)
-        const err = url.get('error')
-        console.log(err)
-        if(err) alert("로그인 실패");
+    window.onload = function() {
+        const url = new URLSearchParams(window.location.search);
+        const err = url.get('error');
+        if (err) {
+            document.getElementById("error-message").textContent = "로그인 실패: ID 또는 비밀번호가 잘못되었습니다.";
+        }
     }
 </script>
+</body>
 </html>

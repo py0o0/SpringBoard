@@ -3,18 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: blue;
+            margin-right: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: darkblue;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: black;
+            background-color: #f9f9f9;
+        }
+        .pagination a:hover {
+            background-color: #ddd;
+        }
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkblue;
+        }
+        .box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .box a {
+            text-decoration: none;
+            color: blue;
+            padding: 8px 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .box a:hover {
+            background-color: #eaeaea;
+            color: darkblue;
+        }
+
+        .admin-box {
+            background-color: #ffe4e1;
+        }
+    </style>
 </head>
 <body>
-<div th:if="${principal != null}">
+<div class="box" th:if="${principal != null}">
     <a href="/logout">로그아웃</a>
     <a href="/writePage">글 작성</a>
     <a href="/myPage">마이페이지</a>
 </div>
-<div th:if="${principal == null}">
+<div class="box" th:if="${principal == null}">
     <a href="/join">회원가입</a>
-    <a href="/login">로그인</a><br>
+    <a href="/login">로그인</a>
 </div>
-<div th:if="${isAdmin == true}">
+<div class="box admin-box" th:if="${isAdmin == true}">
     <a href="/admin">관리 페이지</a>
 </div>
 <p th:text="${id} + '님'"></p>
@@ -41,13 +137,15 @@
         </tr>
     </table>
 </div>
-<div>
+
+<div class="pagination">
     <a th:if="${boardPage.hasPrevious()}"
-       th:href="@{'/' + '?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a> <!--pageable객체에 page와 size값을 줌-->
+       th:href="@{'/' + '?page=' + (${boardPage.number - 1}) + '&size=5'}">이전</a>
     <span th:text="${boardPage.number + 1} + ' / ' + ${boardPage.totalPages}"></span>
     <a th:if="${boardPage.hasNext()}"
        th:href="@{'/' + '?page=' + (${boardPage.number + 1}) + '&size=5'}">다음</a>
 </div>
+
 <div>
     <form action="/search" method="post">
         <input type="text" placeholder="찾으시는 제목이나 내용 검색" id="input" name="input">
