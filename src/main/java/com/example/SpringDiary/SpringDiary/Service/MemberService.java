@@ -43,4 +43,14 @@ public class MemberService {
         }
         memberRepository.removeUser(userId);
     }
+
+    public boolean adminJoinProc(Member member) {
+        int suc = memberRepository.isUser(member);
+        if(suc!=0) return false;
+
+        member.setRole("ADMIN");
+        member.setUserPass(bCryptPasswordEncoder.encode(member.getUserPass()));
+        memberRepository.joinProc(member);
+        return true;
+    }
 }

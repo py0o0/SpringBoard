@@ -63,4 +63,17 @@ public class MemberController {
         memberService.deleteUser(userId);
         return "redirect:/admin/userManage";
     }
+
+    @GetMapping("/admin/join")
+    public String adminJoinPage(){
+        return "adminJoinPage";
+    }
+
+    @PostMapping("/admin/joinProc")
+    public String adminJoinProc(Member member){
+        boolean suc = memberService.adminJoinProc(member);
+        if(suc == false)
+            return "redirect:/admin/join?error=true";
+        return "redirect:/admin/join?success=true";
+    }
 }
