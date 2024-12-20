@@ -68,8 +68,16 @@ public class BoardService {
         boardRepository.removeBoard(boardId);
     }
 
-    public List<Board> likeByGetBoard(String id) {
-        return boardRepository.likeByGetBoard(id);
+    public Page<Board> likeByGetBoard(String userId, Pageable pageable) {
+        int page = pageable.getPageNumber() * pageable.getPageSize();
+        int size = pageable.getPageSize();
+        Map<String, Object> input = new HashMap<>();
+        input.put("userId",userId);
+        input.put("page",page);
+        input.put("size",size);
+        List<Board> boards = boardRepository.likeByGetBoard(input);
+        size = boardRepository.boardGetByLikeCnt(userId);
+        return new PageImpl<>(boards,pageable,size);
     }
 
     public  Page<Board> commentByGetBoard(Pageable pageable,String userId){
@@ -80,7 +88,6 @@ public class BoardService {
         input.put("page",page);
         input.put("size",size);
         List<Board> boards = boardRepository.commentByGetBoard(input);
-        System.out.println(boards);
         size = boardRepository.boardGetByCommentCnt(userId);
         return new PageImpl<>(boards,pageable,size);
     }

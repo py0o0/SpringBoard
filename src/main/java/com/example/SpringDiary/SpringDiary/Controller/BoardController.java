@@ -111,11 +111,11 @@ public class BoardController {
     }
 
     @GetMapping("/my/like")
-    public String myLike(Model model){
+    public String myLike(Model model, @PageableDefault(size = 5) Pageable pageable){
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<Board>boardList = boardService.likeByGetBoard(id);
-        model.addAttribute("boardList", boardList);
-
+        Page<Board>boardPage = boardService.likeByGetBoard(id, pageable);
+        model.addAttribute("boardPage", boardPage);
+        model.addAttribute("like", true);
         return "myBoard";
     }
 

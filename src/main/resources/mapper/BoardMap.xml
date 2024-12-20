@@ -62,9 +62,10 @@
         delete from board_table where boardId=#{boardId};
     </delete>
 
-    <select id="likeByGetBoard" parameterType="String" resultType="board">
+    <select id="likeByGetBoard" resultType="board">
         select * from board_table
-        where boardId in (select boardId from like_table where userId=#{id})
+        where boardId in (select boardId from like_table where userId=#{userId} order by boardId desc)
+        limit #{page}, #{size}
     </select>
 
     <select id="commentByGetBoard" resultType="board">
@@ -108,6 +109,10 @@
 
     <select id="boardGetByCommentCnt" parameterType="String" resultType="Integer">
         select count(*) from board_table where boardId in(select c.boardId from comment_table c
-                                                                           where userId=#{userId})
+                                                                           where c.userId=#{userId})
+    </select>
+
+    <select id="boardGetByLikeCnt" parameterType="String" resultType="Integer">
+        select count(*) from board_table where boardId in(select c.boardId from like_table c where c.userId=#{userId})
     </select>
 </mapper>

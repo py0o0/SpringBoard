@@ -36,7 +36,7 @@ public interface BoardRepository {
 
     void removeComment(Long boardId);
 
-    List<Board> likeByGetBoard(String id);
+    List<Board> likeByGetBoard(Map<String, Object> input);
 
     List<Board> commentByGetBoard(Map<String, Object> input);
 
@@ -57,4 +57,6 @@ public interface BoardRepository {
     List<Board> boardGetByUserId(String userId);
 
     int boardGetByCommentCnt(String userId);
+
+    int boardGetByLikeCnt(String userId);
 }
