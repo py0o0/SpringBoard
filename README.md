@@ -16,7 +16,7 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 스프링을 배우고 스프링으로 혼자 간단히 만들 수 있는 게시판을 직접 만들어보고 배우기 위해 제작하였습니다.
 
  ## ERD
- <img src= "https://github.com/user-attachments/assets/dfe5eb02-32ff-4d54-9a16-46ba41f6222f" alt="DB" width="100%" height="auto"> 
+ <img src= "https://github.com/user-attachments/assets/7dde0a8f-b2a8-4ea6-8c07-1c384e62d01e" alt="DB" width="100%" height="auto"> 
 
 # 사용 기술
 
@@ -66,7 +66,8 @@ MCV 패턴, MyBatis, SpringSecurity 학습
 
 ## 3. 게시글 관리
 ### 게시글 작성 및 수정
-- 로그인 상태에서만 게시글 작성 가능.  
+- 로그인 상태에서만 게시글 작성 가능.
+- 이미지 파일 다중첨부 가능.
 - 작성자는 자신의 게시글에 대해 수정 및 삭제 가능.  
 
 ### 게시글 기능
