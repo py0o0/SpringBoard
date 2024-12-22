@@ -75,8 +75,8 @@ public class BoardController {
         model.addAttribute("isAdmin", isAdmin);
 
         if(board.getFileAttached() == 1){
-            BoardFile boardFile = boardService.findFile(boardId);
-            model.addAttribute("boardFile", boardFile);
+            List<BoardFile> boardFileList = boardService.findFile(boardId);
+            model.addAttribute("boardFileList", boardFileList);
         }
         return "board";
     }

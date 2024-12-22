@@ -63,5 +63,5 @@ public interface BoardRepository {
 
     void saveFile(BoardFile boardFile);
 
-    BoardFile findFile(long boardId);
+    List<BoardFile> findFile(long boardId);
 }

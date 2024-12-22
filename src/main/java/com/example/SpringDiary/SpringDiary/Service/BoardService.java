@@ -29,27 +29,28 @@ public class BoardService {
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         board.setUserId(id);
 
-        if(board.getBoardFile().isEmpty()) {
+        if(board.getBoardFile().get(0).isEmpty()) {
             board.setFileAttached(0);
             boardRepository.write(board);
         }
         else{
             board.setFileAttached(1);
             boardRepository.write(board); //boardId를 받아오기 위함
-            MultipartFile file = board.getBoardFile();
+            for(MultipartFile file : board.getBoardFile()) { //파일 여러개 저장
 
-            String originalFileName = file.getOriginalFilename();
-            String storedFileName = System.currentTimeMillis() + originalFileName; //저장되는 이름 설정
+                String originalFileName = file.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis() + originalFileName; //저장되는 이름 설정
 
-            BoardFile boardFile = new BoardFile();
-            boardFile.setOriginalFileName(originalFileName);
-            boardFile.setStoredFileName(storedFileName);
-            boardFile.setBoardId(board.getBoardId());
+                BoardFile boardFile = new BoardFile();
+                boardFile.setOriginalFileName(originalFileName);
+                boardFile.setStoredFileName(storedFileName);
+                boardFile.setBoardId(board.getBoardId());
 
-            String savePath="C:/file_upload_test/" + storedFileName;
-            file.transferTo(new File(savePath));
+                String savePath = "C:/file_upload_test/" + storedFileName;
+                file.transferTo(new File(savePath));
 
-            boardRepository.saveFile(boardFile);
+                boardRepository.saveFile(boardFile);
+            }
         }
     }
 
@@ -147,7 +148,7 @@ public class BoardService {
         return new PageImpl<>(boards, pageable, size);
     }
 
-    public BoardFile findFile(long boardId) {
+    public List<BoardFile> findFile(long boardId) {
         return boardRepository.findFile(boardId);
 
     }
