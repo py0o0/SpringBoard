@@ -1,6 +1,7 @@
 package com.example.SpringDiary.SpringDiary.Repository;
 
 import com.example.SpringDiary.SpringDiary.Domain.Board;
+import com.example.SpringDiary.SpringDiary.Domain.BoardFile;
 import com.example.SpringDiary.SpringDiary.Domain.Comment;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.domain.Page;
@@ -14,19 +15,19 @@ public interface BoardRepository {
 
     void write(Board board);
 
-    Board findById(int boardId);
+    Board findById(long boardId);
 
-    void updatePass(int boardId);
+    void updatePass(long boardId);
 
     int like(Map<String, Object> input);
 
-    void updateLike(int boardId);
+    void updateLike(long boardId);
 
     void insertLike(Map<String, Object> input);
 
     void insertComment(Comment comment);
 
-    List<Comment> getComment(int boardId);
+    List<Comment> getComment(long boardId);
 
     void updateBoard(Board board);
 
@@ -59,4 +60,8 @@ public interface BoardRepository {
     int boardGetByCommentCnt(String userId);
 
     int boardGetByLikeCnt(String userId);
+
+    void saveFile(BoardFile boardFile);
+
+    BoardFile findFile(long boardId);
 }

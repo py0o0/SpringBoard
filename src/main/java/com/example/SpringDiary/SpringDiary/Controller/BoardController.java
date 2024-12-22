@@ -1,6 +1,7 @@
 package com.example.SpringDiary.SpringDiary.Controller;
 
 import com.example.SpringDiary.SpringDiary.Domain.Board;
+import com.example.SpringDiary.SpringDiary.Domain.BoardFile;
 import com.example.SpringDiary.SpringDiary.Domain.Comment;
 import com.example.SpringDiary.SpringDiary.Service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -51,13 +53,13 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(Board board){
+    public String write (Board board) throws IOException {
         boardService.write(board);
         return "redirect:/";
     }
 
     @GetMapping("/board/{boardId}")
-    public String board(@PathVariable int boardId, Model model,
+    public String board(@PathVariable long boardId, Model model,
     @AuthenticationPrincipal UserDetails userDetails){
         Board board = boardService.findById(boardId);
         model.addAttribute("board", board);
@@ -71,6 +73,11 @@ public class BoardController {
         boolean isAdmin = userDetails != null && userDetails.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
+
+        if(board.getFileAttached() == 1){
+            BoardFile boardFile = boardService.findFile(boardId);
+            model.addAttribute("boardFile", boardFile);
+        }
         return "board";
     }
 

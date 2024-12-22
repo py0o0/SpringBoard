@@ -2,6 +2,7 @@ package com.example.SpringDiary.SpringDiary.Domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -14,4 +15,6 @@ public class Board {
     private Long boardPass;
     private Long boardLike;
     private String boardCreated;
+    private int fileAttached;
+    private MultipartFile boardFile;
 }

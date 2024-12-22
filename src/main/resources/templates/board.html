@@ -127,6 +127,10 @@
             <th>좋아요</th>
             <td th:text="${board.boardLike}"></td>
         </tr>
+        <tr th:if="${board.fileAttached == 1}">
+            <th>image</th>
+            <td><img th:src="@{|/upload/${boardFile.storedFileName}|}" alt="" width="200" height="200"></td>
+        </tr>
     </table>
 
     <div class="button-group">

@@ -1,6 +1,7 @@
 package com.example.SpringDiary.SpringDiary.Service;
 
 import com.example.SpringDiary.SpringDiary.Domain.Board;
+import com.example.SpringDiary.SpringDiary.Domain.BoardFile;
 import com.example.SpringDiary.SpringDiary.Domain.Comment;
 import com.example.SpringDiary.SpringDiary.Repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +25,37 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
 
-    public void write(Board board) {
+    public void write(Board board) throws IOException {
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
         board.setUserId(id);
-        boardRepository.write(board);
+
+        if(board.getBoardFile().isEmpty()) {
+            board.setFileAttached(0);
+            boardRepository.write(board);
+        }
+        else{
+            board.setFileAttached(1);
+            boardRepository.write(board); //boardId를 받아오기 위함
+            MultipartFile file = board.getBoardFile();
+
+            String originalFileName = file.getOriginalFilename();
+            String storedFileName = System.currentTimeMillis() + originalFileName; //저장되는 이름 설정
+
+            BoardFile boardFile = new BoardFile();
+            boardFile.setOriginalFileName(originalFileName);
+            boardFile.setStoredFileName(storedFileName);
+            boardFile.setBoardId(board.getBoardId());
+
+            String savePath="C:/file_upload_test/" + storedFileName;
+            file.transferTo(new File(savePath));
+
+            boardRepository.saveFile(boardFile);
+        }
     }
 
 
 
-    public Board findById(int boardId) {
+    public Board findById(long boardId) {
         boardRepository.updatePass(boardId);
         return boardRepository.findById(boardId);
     }
@@ -54,7 +80,7 @@ public class BoardService {
         boardRepository.insertComment(comment);
     }
 
-    public List<Comment> getComment(int boardId) {
+    public List<Comment> getComment(long boardId) {
         return boardRepository.getComment(boardId);
     }
 
@@ -121,4 +147,8 @@ public class BoardService {
         return new PageImpl<>(boards, pageable, size);
     }
 
+    public BoardFile findFile(long boardId) {
+        return boardRepository.findFile(boardId);
+
+    }
 }

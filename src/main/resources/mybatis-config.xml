@@ -6,5 +6,6 @@
         <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.Member" alias="member"></typeAlias>
         <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.Board" alias="board"></typeAlias>
         <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.Comment" alias="comment"></typeAlias>
+        <typeAlias type="com.example.SpringDiary.SpringDiary.Domain.BoardFile" alias="boardFile"></typeAlias>
     </typeAliases>
 </configuration>

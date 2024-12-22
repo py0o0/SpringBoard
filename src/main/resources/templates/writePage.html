@@ -88,9 +88,10 @@
 <div class="container">
     <a href="/" class="back-link">홈</a>
     <h1>글 작성</h1>
-    <form action="write" method="post">
+    <form action="write" method="post" enctype="multipart/form-data">
         <input type="text" placeholder="제목" name="boardTitle" id="boardTitle" required>
         <textarea placeholder="내용" name="boardContents" id="boardContents" required></textarea>
+        <input type="file" name="boardFile" id="boardFile" placeholder="파일 첨부" required>
         <input type="submit" value="글 작성">
     </form>
 </div>
